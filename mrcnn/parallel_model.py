@@ -1,6 +1,6 @@
 """
 Mask R-CNN
-Multi-GPU Support for Keras.
+Multi-GPU Support for tensorflow.
 
 Copyright (c) 2017 Matterport, Inc.
 Licensed under the MIT License (see LICENSE for details)
@@ -14,9 +14,9 @@ https://github.com/fchollet/keras/blob/master/keras/utils/training_utils.py
 """
 
 import tensorflow as tf
-import keras.backend as K
-import keras.layers as KL
-import keras.models as KM
+import tf.keras.backend as K
+import tf.keras.layers as KL
+import tf.keras.models as KM
 
 
 class ParallelModel(KM.Model):
@@ -113,9 +113,9 @@ if __name__ == "__main__":
 
     import os
     import numpy as np
-    import keras.optimizers
-    from keras.datasets import mnist
-    from keras.preprocessing.image import ImageDataGenerator
+    import tf.keras.optimizers
+    from tf.keras.datasets import mnist
+    from tf.keras.preprocessing.image import ImageDataGenerator
 
     GPU_COUNT = 2
 
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     # Add multi-GPU support.
     model = ParallelModel(model, GPU_COUNT)
 
-    optimizer = keras.optimizers.SGD(lr=0.01, momentum=0.9, clipnorm=5.0)
+    optimizer = tf.keras.optimizers.SGD(lr=0.01, momentum=0.9, clipnorm=5.0)
 
     model.compile(loss='sparse_categorical_crossentropy',
                   optimizer=optimizer, metrics=['accuracy'])
@@ -170,6 +170,6 @@ if __name__ == "__main__":
         datagen.flow(x_train, y_train, batch_size=64),
         steps_per_epoch=50, epochs=10, verbose=1,
         validation_data=(x_test, y_test),
-        callbacks=[keras.callbacks.TensorBoard(log_dir=MODEL_DIR,
+        callbacks=[tf.keras.callbacks.TensorBoard(log_dir=MODEL_DIR,
                                                write_graph=True)]
     )
